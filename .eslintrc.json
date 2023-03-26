@@ -21,10 +21,19 @@
         "react",
         "@typescript-eslint"
     ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
     "rules": {
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "react/require-default-props": "off",
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "@typescript-eslint/no-empty-function": "off"
     }
 }

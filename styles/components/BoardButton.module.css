@@ -1,0 +1,20 @@
+.button {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 39px;
+  height: 39px;
+  font-size: var(--font-size);
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 0;
+  transition: .1s all;
+  color: #e8e8e8bf;
+}
+
+.button:hover, .button.active {
+  background-color: #212429bf;
+  color: var(--color-primary);
+}

@@ -20,7 +20,7 @@
   background-color: var(--bg-color-tertiary);
 }
 
-.drawing-menu, .menu, .center {
+.drawing-menu, .menu, .controls {
   gap: 2px;
 }
 
@@ -28,7 +28,7 @@
   background-color: var(--bg-color-secondary);
 }
 
-.center {
+.controls {
   display: flex;
   width: 100%;
   justify-content: center;

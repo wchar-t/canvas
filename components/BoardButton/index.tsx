@@ -13,3 +13,5 @@ export default function BoardButton({ label, onClick, isActive = false }: BoardB
     </button>
   );
 }
+
+export { styles };

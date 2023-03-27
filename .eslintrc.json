@@ -34,6 +34,7 @@
         "react/require-default-props": "off",
         "import/extensions": "off",
         "jsx-a11y/label-has-associated-control": "off",
-        "@typescript-eslint/no-empty-function": "off"
+        "@typescript-eslint/no-empty-function": "off",
+        "semi": "off"
     }
 }

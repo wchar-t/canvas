@@ -1,8 +1,9 @@
 import { encrypt as encryptJwt } from '../../middlewares/session';
-import { Session } from '../../interfaces/server/session';
+import { Session } from '../../interfaces/shared/session';
 import withMethod from '../../middlewares/method';
 import { CanvasApiRequest } from '../../interfaces/server/request';
 import { CanvasApiResponse } from '../../interfaces/server/response';
+import prisma from '../../lib/prisma';
 
 /* eslint-disable no-underscore-dangle */
 
@@ -18,35 +19,52 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     return res.status(400).json({ error: true, result: 'Dados inválidos.' });
   }
 
-  /*const doc = await req.db!.database('users').findOne<User>({ email: username.toLowerCase() });
+  const doc = await prisma.user.findUnique({
+    where: {
+      username,
+    },
+  });
 
   if (!doc) {
-    return res.status(200).json({ error: true, result: 'E-mail inválido ou senha incorreta.' });
+    return res.status(200).json({
+      error: {
+        code: 'invalid_credentials',
+        message: 'E-mail inválido ou senha incorreta.',
+      },
+    });
   }
 
-  const hash = createHash('sha256');
-  const hashedPassword = hash.update(password).digest('hex').toLowerCase();
-
-  if (doc.senha!.toLowerCase() !== hashedPassword) {
-    return res.status(401).json({ error: true, result: 'Senha inválida.' });
+  if (doc.password !== password) {
+    return res.status(200).json({
+      error: {
+        code: 'invalid_password',
+        message: 'Senha inválida.',
+      },
+    });
   }
+
+  const profile = await prisma.profile.findUniqueOrThrow({
+    where: {
+      userId: doc.id,
+    },
+  });
 
   const session: Session = {
-    id: doc._id!,
-    email: doc.email!,
-    foto: doc.foto!,
-    cargo: doc.cargo!,
-    dado: {
-      pessoal: {
-        nome: doc.dado!.pessoal.nome,
+    id: doc.id,
+    username: doc.username,
+    email: doc.email,
+    data: {
+      personal: {
+        name: profile.name,
+        picture: profile.image,
       },
     },
+    createdAt: doc.createdAt,
   };
+
   const jwt = encryptJwt(session);
 
-  await req.db!.database('logs').utils.insertLog(session.id, session.dado.pessoal.nome, 'Fez Login.');*/
-
-  return res.status(200).json({ error: false, result: {} });
+  return res.status(200).json({ error: false, result: { jwt } });
 }
 
 export default withMethod(handler, 'POST');

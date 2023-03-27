@@ -35,6 +35,8 @@
         "import/extensions": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "semi": "off"
+        "semi": "off",
+        "jsx-a11y/alt-text": "off",
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }

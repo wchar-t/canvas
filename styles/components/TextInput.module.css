@@ -33,3 +33,8 @@
 .label {
   padding-bottom: 15px;
 }
+
+.input.error {
+  box-shadow: 0 0 5px 1px #e54537 !important;
+  border: 1px solid #e54537 !important;
+}

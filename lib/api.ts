@@ -1,3 +1,4 @@
+import { Session } from '../interfaces/shared/session';
 import LoginSuccess from '../interfaces/client/LoginSuccess';
 
 /* eslint-disable no-undef */
@@ -7,8 +8,11 @@ export interface SuccessfulResponse<Data extends Record<string, any>> {
 }
 
 export interface ErrorResponse {
-  error: true,
-  result: string,
+  error: {
+    code: string,
+    message: string,
+  },
+  result: null,
 }
 
 type RequestResponse<Data extends Record<string, any>> = | SuccessfulResponse<Data> | ErrorResponse;
@@ -29,7 +33,7 @@ export const request = async <Data extends Record<string, any>>(
   }).then((e) => e.json());
 
   if (error) {
-    return <ErrorResponse>{ error, result };
+    return <ErrorResponse>{ error: { code: error.code, message: error.message } };
   }
 
   return <SuccessfulResponse<Data>>{ result };
@@ -45,4 +49,8 @@ export default class Api {
   }
 
   // Rotas privadas
+
+  static async me(): Promise<RequestResponse<Session>> {
+    return request('/api/me');
+  }
 }

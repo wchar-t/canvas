@@ -1,7 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { CanvasApiRequest } from '../interfaces/server/request';
 import { CanvasApiResponse } from '../interfaces/server/response';
-import { Session } from '../interfaces/server/session';
+import { Session } from '../interfaces/shared/session';
 
 export function decrypt(jwt: string | null): Session | boolean {
   if (!jwt) {
@@ -27,7 +27,7 @@ export default function withSession(
     const session = decrypt((req.headers?.authorization || '').replace('Bearer ', ''));
 
     if (!session) {
-      return res.status(401).json({ error: true, result: 'Não autenticado.' });
+      return res.status(401).json({ error: { code: 'not_authorized', message: 'Não autenticado' } });
     }
 
     req.session = (session as Session);

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import BoardButton, { styles as BoardButtonStyles } from '../../components/BoardButton';
 import styles from '../../styles/Board.module.css';
@@ -23,7 +23,8 @@ export default function Board() {
     canvas.current = new fabric.Canvas(canvasEl.current, {});
     // controller.current = new BoardController(canvas);
     // canvas.current.isDrawingMode = true;
-    // canvas.current.freeDrawingBrush.color = 'red';
+    canvas.current.freeDrawingBrush.color = '#ff000055';
+    canvas.current.freeDrawingBrush.width = 5;
 
     controlsEl.current.querySelectorAll('button').forEach((e) => {
       e.addEventListener('click', () => {
@@ -43,6 +44,7 @@ export default function Board() {
     <div className={styles.page}>
       <div className={styles.menu}> </div>
       <div className={styles['drawing-menu']}>
+        <div style={{ marginLeft: 15 }}> </div>
         <BoardButton label={<Icon name="floppy-disk" type="solid" />} onClick={() => {}} />
         <div className={styles.controls} ref={controlsEl}>
           <BoardButton label={<Icon name="arrow-pointer" />} onClick={() => controller.setPointer()} isActive />
@@ -57,6 +59,7 @@ export default function Board() {
         <BoardButton label={<Icon name="reply" type="solid" />} onClick={() => {}} />
         <div className={styles['drawing-menu-separator']}> </div>
         <BoardButton label={<Icon name="trash" type="solid" />} onClick={() => controller.clearCanvas()} />
+        <div style={{ marginRight: 15 }}> </div>
       </div>
       <div className={styles.content}>
         <canvas style={{ height: '100%', width: '100%' }} ref={canvasEl} />

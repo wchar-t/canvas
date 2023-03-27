@@ -15,7 +15,7 @@
 .drawing-menu, .menu {
   display: flex;
   width: 100%;
-  height: 54px;
+  min-height: 52px;
   align-items: center;
   background-color: var(--bg-color-tertiary);
 }
@@ -40,4 +40,9 @@
   width: 1px;
   min-height: 19px;
   border-left: 1px solid #464646;
+  margin: 0 10px;
+}
+
+.drawing-menu {
+  box-shadow: 0 3px 10px 1px #1010109e;
 }

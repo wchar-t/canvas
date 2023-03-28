@@ -37,6 +37,8 @@
         "@typescript-eslint/no-empty-function": "off",
         "semi": "off",
         "jsx-a11y/alt-text": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
         "@typescript-eslint/no-explicit-any": "off"
     }
 }

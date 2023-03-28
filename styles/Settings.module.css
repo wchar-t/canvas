@@ -10,15 +10,16 @@
 .content {
   width: 100%;
   max-width: 1280px;
-  gap: 25px;
-  margin-top: 25px;
+  gap: 50px;
+  margin-top: 50px;
 }
 
 .profile {
-  height: 52px;
+  height: 56px;
   display: flex;
   align-items: center;
   gap: 15px;
+  padding: 0px 15px;
 }
 
 .profile img {

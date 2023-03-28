@@ -53,4 +53,10 @@ export default class Api {
   static async me(): Promise<RequestResponse<Session>> {
     return request('/api/me');
   }
+
+  // Local
+
+  static getLocalSession(): Session | null {
+    return JSON.parse(Buffer.from(localStorage.getItem('token')?.split('.')[1] || 'e30=', 'base64').toString());
+  }
 }

@@ -23,9 +23,12 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     where: {
       username,
     },
+    include: {
+      profile: true,
+    },
   });
 
-  if (!doc) {
+  if (!doc || !doc.profile) {
     return res.status(200).json({
       error: {
         code: 'invalid_credentials',
@@ -43,21 +46,15 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     });
   }
 
-  const profile = await prisma.profile.findUniqueOrThrow({
-    where: {
-      userId: doc.id,
-    },
-  });
-
   const session: Session = {
     id: doc.id,
     username: doc.username,
     email: doc.email,
-    data: {
-      personal: {
-        name: profile.name,
-        picture: profile.image,
-      },
+    profile: {
+      id: doc.id,
+      name: doc.profile.name,
+      bio: doc.profile.bio,
+      image: doc.profile.image,
     },
     createdAt: doc.createdAt,
   };

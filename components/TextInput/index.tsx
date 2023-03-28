@@ -6,16 +6,40 @@ interface TextInputOptions {
     placeholder?: string,
     name: string,
     isPassword?: boolean,
+    isMultiline?: boolean,
+    defaultValue?: string,
     inputRef?: LegacyRef<HTMLInputElement>,
 }
 
 export default function TextInput({
-  label, placeholder, name, isPassword = false, inputRef,
+  label, placeholder, name, isPassword = false, isMultiline = false, inputRef, defaultValue,
 }: TextInputOptions) {
   return (
     <div>
       <div className={styles.label}>{label}</div>
-      <input type={isPassword ? 'password' : 'text'} placeholder={placeholder} name={name} className={styles.input} autoComplete="off" ref={inputRef} />
+      {
+        isMultiline
+          ? (
+            <textarea
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              name={name}
+              className={styles.input}
+              style={{ height: '130px' }}
+            />
+          )
+          : (
+            <input
+              defaultValue={defaultValue}
+              type={isPassword ? 'password' : 'text'}
+              placeholder={placeholder}
+              name={name}
+              className={styles.input}
+              autoComplete="off"
+              ref={inputRef}
+            />
+          )
+      }
     </div>
   );
 }

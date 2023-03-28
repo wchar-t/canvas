@@ -4,7 +4,7 @@ import { Session } from '../interfaces/shared/session';
 import { loadSession } from '../controllers/Settings';
 import TopMenu from '../components/TopMenu';
 import styles from '../styles/Settings.module.css';
-import SideSettingsMenu from '@/components/SideSettingsMenu';
+import SideSettingsMenu from '../components/SideSettingsMenu';
 
 export default function Settings() {
   const { push } = useRouter();
@@ -30,13 +30,13 @@ export default function Settings() {
       <div className={styles.page}>
         <div className={styles.content}>
           <div className={styles.profile}>
-            <img src="https://i.pinimg.com/736x/c7/c3/90/c7c3904ed2164988cf011e2abb9bd793.jpg" />
+            <img src={session.profile.image} />
             <div>
               <span className={styles.name}>{session.profile.name}</span>
               <span className={styles.muted}>Sua conta pessoal</span>
             </div>
           </div>
-          <SideSettingsMenu />
+          <SideSettingsMenu session={session} />
         </div>
       </div>
     </>

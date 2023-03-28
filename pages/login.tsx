@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import { login, register } from '../controllers/Login';
+import { useRouter } from 'next/router';
+import controller from '../controllers/Login';
 import FormButton from '../components/FormButton';
 import TextInput from '../components/TextInput';
 import styles from '../styles/Login.module.css';
@@ -10,6 +11,19 @@ export default function Login() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const { push } = useRouter();
+
+  async function login() {
+    if ((await controller.login(usernameRef, passwordRef))) {
+      push('/board/new');
+    }
+  }
+
+  async function register() {
+    if ((await controller.register(nameRef, usernameRef, emailRef, passwordRef))) {
+      push('/settings');
+    }
+  }
 
   return (
     <div className={styles.page}>
@@ -17,19 +31,19 @@ export default function Login() {
         <h2>Bem-Vindo !</h2>
         <TextInput label="Login" name="login" placeholder="Digite seu login" inputRef={usernameRef} />
         <TextInput label="Senha" name="password" placeholder="Digite sua senha" inputRef={passwordRef} isPassword />
-        <FormButton label="Entrar" onClick={() => login(usernameRef, passwordRef)} />
-        <div onClick={() => setIsLogin(false)} role="none">fazer registro</div>
+        <FormButton label="Entrar" onClick={() => login()} />
+        <div onClick={() => setIsLogin(false)} role="none" style={{ marginTop: 30, color: '#22232882' }}>Sem conta? Registre-se aqui</div>
         { /* todo: social media */ }
       </div>
 
       <div className={styles.form} style={{ display: isLogin ? 'none' : 'flex' }}>
         <h2>Cadastrar</h2>
-        <div style={{display:'none'}}><TextInput label="Nome" name="name" placeholder="Digite seu nome" inputRef={nameRef} /></div>
+        <div style={{ display: 'none' }}><TextInput label="Nome" name="name" placeholder="Digite seu nome" inputRef={nameRef} /></div>
         <TextInput label="Usuário" name="username" placeholder="meuNick" inputRef={usernameRef} />
-        <div style={{display:'none'}}><TextInput label="Email" name="email" placeholder="pessoa@dominio.com" inputRef={emailRef} /></div>
+        <div style={{ display: 'none' }}><TextInput label="Email" name="email" placeholder="pessoa@dominio.com" inputRef={emailRef} /></div>
         <TextInput label="Senha" name="password" placeholder="Digite sua senha" inputRef={passwordRef} isPassword />
-        <FormButton label="Cadastrar" onClick={() => register(nameRef, usernameRef, emailRef, passwordRef)} />
-        <div onClick={() => setIsLogin(true)} role="none">fazer login</div>
+        <FormButton label="Cadastrar" onClick={() => register()} />
+        <div onClick={() => setIsLogin(true)} role="none" style={{ marginTop: 30, color: '#22232882' }}>Tem uma conta? Faça login aqui</div>
         { /* todo: social media */ }
       </div>
       <div style={{ height: 80 }}> </div>

@@ -56,6 +56,14 @@ export default function TopMenu() {
               Configurações
             </Link>
           </li>
+          <li>
+            <Link href="/logout">
+              <div className={styles.icon}>
+                <Icon name="reply" />
+              </div>
+              Logout
+            </Link>
+          </li>
         </ul>
       </button>
     </nav>

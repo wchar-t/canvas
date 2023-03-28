@@ -5,8 +5,8 @@ import Api from '../lib/api';
 export async function login(
   usernameRef: RefObject<HTMLInputElement>,
   passwordRef: RefObject<HTMLInputElement>,
-) {
-  if (!usernameRef.current || !passwordRef.current) return;
+): Promise<boolean> {
+  if (!usernameRef.current || !passwordRef.current) return false;
 
   const username = usernameRef.current.value.toLowerCase().trim();
   const password = passwordRef.current.value.trim();
@@ -22,22 +22,25 @@ export async function login(
       passwordRef.current.classList.add(styles.error);
     }
 
-    return;
+    return false;
   }
 
   usernameRef.current.classList.remove(styles.error);
   passwordRef.current.classList.remove(styles.error);
 
   localStorage.setItem('token', result.jwt);
+  return true;
 }
 
 export async function register(
   nameRef: RefObject<HTMLInputElement>,
   usernameRef: RefObject<HTMLInputElement>,
   emailRef: RefObject<HTMLInputElement>,
-  passwordRef: RefObject<HTMLInputElement>
-) {
-  if (!usernameRef.current || !passwordRef.current || !emailRef.current || !nameRef.current) return;
+  passwordRef: RefObject<HTMLInputElement>,
+): Promise<boolean> {
+  if (!usernameRef.current || !passwordRef.current || !emailRef.current || !nameRef.current) {
+    return false
+  }
 
   const username = usernameRef.current.value.toLowerCase().trim();
   const password = passwordRef.current.value.trim();
@@ -50,10 +53,13 @@ export async function register(
     if (error.code === 'user_already_exists') {
       usernameRef.current.classList.add(styles.error);
     }
-    return;
+    return false;
   }
 
   usernameRef.current.classList.remove(styles.error);
 
   localStorage.setItem('token', result.jwt);
+  return true;
 }
+
+export default { login, register }

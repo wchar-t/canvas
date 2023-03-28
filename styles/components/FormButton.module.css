@@ -13,3 +13,13 @@
 .button:hover {
   background-color: #485ddb;
 }
+
+.tertiary {
+  background: var(--bg-color-tertiary);
+  border: 1px solid var(--bg-color-tertiary);
+}
+
+.tertiary:hover {
+  background-color: #17191c;
+  border: 1px solid #17191c;
+}

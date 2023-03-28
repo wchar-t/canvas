@@ -24,11 +24,9 @@ export default class BoardController {
       if (objects?.length) {
         this.canvas.current?.discardActiveObject().renderAll();
       }
-    }
-    else if (e.key === '+') {
+    } else if (e.key === '+') {
       this.canvas.current.freeDrawingBrush.width += 5;
-    }
-    else if (e.key === '-') {
+    } else if (e.key === '-') {
       this.canvas.current.freeDrawingBrush.width -= 5;
     }
   }

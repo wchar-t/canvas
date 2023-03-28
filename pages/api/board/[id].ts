@@ -23,9 +23,13 @@ async function get(req: CanvasApiRequest, res: CanvasApiResponse) {
   }
 
   const dir = path.join(__dirname, '../../../../../boards', `${board.id}.json`);
-  const data = await fsPromises.readFile(dir, 'utf-8');
 
-  return res.status(200).json({ error: false, result: data });
+  try {
+    const data = await fsPromises.readFile(dir, 'utf-8');
+    return res.status(200).json({ error: false, result: data });
+  } catch (e) {
+    return res.status(200).json({ error: false, result: '{}' });
+  }
 }
 
 async function post(req: CanvasApiRequest, res: CanvasApiResponse) {

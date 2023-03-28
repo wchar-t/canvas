@@ -29,7 +29,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
   });
 
   if (!doc || !doc.profile) {
-    return res.status(200).json({
+    return res.status(400).json({
       error: {
         code: 'invalid_credentials',
         message: 'E-mail inválido ou senha incorreta.',
@@ -38,7 +38,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
   }
 
   if (doc.password !== password) {
-    return res.status(200).json({
+    return res.status(400).json({
       error: {
         code: 'invalid_password',
         message: 'Senha inválida.',

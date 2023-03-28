@@ -1,13 +1,6 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { CanvasApiRequest } from '../../interfaces/server/request';
+import { CanvasApiResponse } from '../../interfaces/server/response';
 
-type Data = {
-  name: string
-}
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
+export default async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
+  return res.status(200).json({ name: 'John Doe' });
 }

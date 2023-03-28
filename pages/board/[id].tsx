@@ -1,10 +1,15 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic'
+import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import BoardButton, { styles as BoardButtonStyles } from '../../components/BoardButton';
 import styles from '../../styles/Board.module.css';
 import Icon from '../../components/Icon';
 import BoardController from '../../controllers/BoardController';
+
+const TopMenu = dynamic(() => import('../../components/TopMenu'), {
+  ssr: false,
+});
 
 export default function Board() {
   const router = useRouter();
@@ -12,18 +17,18 @@ export default function Board() {
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const controlsEl = useRef<HTMLDivElement>(null);
   const canvas = useRef<fabric.Canvas>();
-  // const controller = useRef<BoardController>();
   const controller = new BoardController(canvas);
 
   useEffect(() => {
-    if (!canvasEl.current || !controlsEl.current) return () => {};
+    if (!canvasEl.current || !controlsEl.current || !router.isReady) return () => {};
 
-    canvasEl.current.setAttribute('width', (canvasEl?.current.parentElement?.clientWidth || 0).toString());
-    canvasEl.current.setAttribute('height', (canvasEl?.current.parentElement?.clientHeight || 0).toString());
+    canvasEl.current?.setAttribute('width', (canvasEl.current?.parentElement?.clientWidth || 0).toString());
+    canvasEl.current?.setAttribute('height', ((canvasEl.current?.parentElement?.clientHeight || 0) - 60).toString());
     canvas.current = new fabric.Canvas(canvasEl.current, {});
+
     // controller.current = new BoardController(canvas);
     // canvas.current.isDrawingMode = true;
-    canvas.current.freeDrawingBrush.color = '#ff000055';
+    canvas.current.freeDrawingBrush.color = '#fff';
     canvas.current.freeDrawingBrush.width = 5;
 
     controlsEl.current.querySelectorAll('button').forEach((e) => {
@@ -35,17 +40,19 @@ export default function Board() {
       });
     });
 
+    controller.resumeCanvas(id as string);
+
     return () => {
       canvas.current?.dispose();
     };
-  }, []);
+  }, [router.isReady]);
 
   return (
     <div className={styles.page}>
-      <div className={styles.menu}> </div>
+      <TopMenu />
       <div className={styles['drawing-menu']}>
         <div style={{ marginLeft: 15 }}> </div>
-        <BoardButton label={<Icon name="floppy-disk" type="solid" />} onClick={() => {}} />
+        <BoardButton label={<Icon name="floppy-disk" type="solid" />} onClick={() => controller.saveCanvas(id as string)} />
         <div className={styles.controls} ref={controlsEl}>
           <BoardButton label={<Icon name="arrow-pointer" />} onClick={() => controller.setPointer()} isActive />
           { /* <BoardButton label={<Icon name="eraser" />} onClick={() => {}} /> */ }

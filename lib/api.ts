@@ -1,5 +1,6 @@
 import { Session } from '../interfaces/shared/session';
 import LoginSuccess from '../interfaces/client/LoginSuccess';
+import Board from '../interfaces/shared/board';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -54,9 +55,22 @@ export default class Api {
     return request('/api/me');
   }
 
+  static async createBoard(): Promise<RequestResponse<Board>> {
+    return request('/api/board/create');
+  }
+
+  static async getBoard(id: string): Promise<RequestResponse<Board>> {
+    return request(`/api/board/${id}`);
+  }
+
+  static async saveBoard(id: string, data?: any): Promise<RequestResponse<Board>> {
+    return request(`/api/board/${id}`, { data });
+  }
+
   // Local
 
   static getLocalSession(): Session | null {
+    if (typeof localStorage === 'undefined') return null;
     return JSON.parse(Buffer.from(localStorage.getItem('token')?.split('.')[1] || 'e30=', 'base64').toString());
   }
 }

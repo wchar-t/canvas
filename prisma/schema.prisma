@@ -14,6 +14,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   profile   Profile?
+  boards    Board[]
 }
 
 model Profile {
@@ -23,4 +24,13 @@ model Profile {
   name      String
   bio       String @default("")
   image     String @default("")
+}
+
+model Board {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String @db.ObjectId
 }

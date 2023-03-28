@@ -5,6 +5,7 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 .content {
@@ -17,7 +18,7 @@
   width: 100%;
   min-height: 52px;
   align-items: center;
-  background-color: var(--bg-color-tertiary);
+  background-color: #151619;
 }
 
 .drawing-menu, .menu, .controls {

@@ -1,15 +1,36 @@
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import Api from '../../lib/api';
 import styles from '../../styles/components/TopMenu.module.css';
 import Icon from '../Icon';
 
 export default function TopMenu() {
+  const profileButtonRef = useRef<HTMLButtonElement>(null);
   const localSession = Api.getLocalSession();
+
+  function openProfileMenu() {
+    profileButtonRef.current?.classList.add(styles.active);
+  }
+
+  function closeProfileMenu() {
+    // hacky but works
+    setTimeout(() => profileButtonRef.current?.classList.remove(styles.active), 100);
+  }
+
+  useEffect(() => {
+    profileButtonRef.current?.addEventListener('focus', openProfileMenu);
+    profileButtonRef.current?.addEventListener('blur', closeProfileMenu);
+
+    return () => {
+      profileButtonRef.current?.removeEventListener('focus', openProfileMenu);
+      profileButtonRef.current?.removeEventListener('blur', closeProfileMenu);
+    }
+  }, []);
 
   return (
     <nav className={styles.menu}>
       <div style={{ width: '100%' }}> </div>
-      <button className={styles.profile} type="button">
+      <button className={styles.profile} type="button" ref={profileButtonRef}>
         <div className={styles.pp}>
           <img src={localSession?.profile.image} />
         </div>
@@ -19,6 +40,14 @@ export default function TopMenu() {
         </div>
         <Icon name="angle-down" />
         <ul>
+          <li>
+            <Link href="/">
+              <div className={styles.icon}>
+                <Icon name="home" />
+              </div>
+              Início
+            </Link>
+          </li>
           <li>
             <Link href="/settings">
               <div className={styles.icon}>

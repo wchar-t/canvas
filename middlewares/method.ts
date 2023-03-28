@@ -3,10 +3,10 @@ import { CanvasApiResponse } from '../interfaces/server/response';
 
 export default function withMethod(
   handler: (req: CanvasApiRequest, res: CanvasApiResponse) => void,
-  method: string,
+  methods: string[],
 ) {
   return (req: CanvasApiRequest, res: CanvasApiResponse) => {
-    if (req.method !== method) {
+    if (!methods.includes(req.method ?? '')) {
       return res.status(405).json({ error: true, result: 'Método não permitido.' });
     }
 

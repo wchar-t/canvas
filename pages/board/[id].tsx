@@ -53,9 +53,9 @@ export default function Board() {
         <BoardButton label={<Icon name="floppy-disk" type="solid" />} onClick={() => controller.saveCanvas(id as string)} />
         <div className={styles.controls} ref={controlsEl}>
           <BoardButton label={<Icon name="arrow-pointer" />} onClick={() => controller.setPointer()} isActive />
-          { /* <BoardButton label={<Icon name="eraser" />} onClick={() => {}} /> */ }
           <div className={styles['drawing-menu-separator']}> </div>
           <BoardButton label={<Icon name="paintbrush" type="solid" />} onClick={() => controller.setPencil()} />
+          <BoardButton label={<Icon name="eraser" />} onClick={() => controller.setEraser()} />
           <BoardButton label={<Icon name="marker" type="solid" />} onClick={() => {}} />
           <BoardButton label={<Icon name="slash" type="solid" />} onClick={() => {}} />
           <BoardButton label={<Icon name="shapes" type="solid" />} onClick={() => {}} />

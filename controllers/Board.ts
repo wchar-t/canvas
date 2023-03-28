@@ -35,6 +35,15 @@ export default class BoardController {
   setPencil() {
     if (!this.canvas.current) return;
     this.canvas.current.isDrawingMode = true;
+    this.canvas.current.freeDrawingBrush.color = '#fff';
+    this.canvas.current.freeDrawingBrush.width = 5;
+  }
+
+  setEraser() {
+    if (!this.canvas.current) return;
+    this.canvas.current.isDrawingMode = true;
+    this.canvas.current.freeDrawingBrush.color = '#1d1e22';
+    this.canvas.current.freeDrawingBrush.width = 5;
   }
 
   clearCanvas() {

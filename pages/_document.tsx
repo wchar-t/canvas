@@ -7,6 +7,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
+        <meta name="viewport" content="minimum-width=50%, initial-scale=0.5" />
         <link rel="stylesheet" type="text/css" href="/assets/css/all.css" />
       </Head>
       <body>

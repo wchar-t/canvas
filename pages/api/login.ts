@@ -64,4 +64,4 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
   return res.status(200).json({ error: false, result: { jwt } });
 }
 
-export default withMethod(handler, 'POST');
+export default withMethod(handler, ['POST']);

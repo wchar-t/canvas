@@ -5,7 +5,7 @@ import { fabric } from 'fabric';
 import BoardButton, { styles as BoardButtonStyles } from '../../components/BoardButton';
 import styles from '../../styles/Board.module.css';
 import Icon from '../../components/Icon';
-import BoardController from '../../controllers/BoardController';
+import BoardController from '../../controllers/Board';
 
 const TopMenu = dynamic(() => import('../../components/TopMenu'), {
   ssr: false,
@@ -26,10 +26,7 @@ export default function Board() {
     canvasEl.current?.setAttribute('height', ((canvasEl.current?.parentElement?.clientHeight || 0) - 60).toString());
     canvas.current = new fabric.Canvas(canvasEl.current, {});
 
-    // controller.current = new BoardController(canvas);
-    // canvas.current.isDrawingMode = true;
-    canvas.current.freeDrawingBrush.color = '#fff';
-    canvas.current.freeDrawingBrush.width = 5;
+    controller.setupCanvas();
 
     controlsEl.current.querySelectorAll('button').forEach((e) => {
       e.addEventListener('click', () => {
@@ -44,6 +41,7 @@ export default function Board() {
 
     return () => {
       canvas.current?.dispose();
+      document.removeEventListener('keyup', controller.documentOnKeyUp);
     };
   }, [router.isReady]);
 

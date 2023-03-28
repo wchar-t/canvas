@@ -1,10 +1,30 @@
 import Api from '../lib/api';
 
 export default class BoardController {
-  private canvas: React.MutableRefObject<fabric.Canvas | undefined>;
+  private canvas: React.MutableRefObject<fabric.Canvas>;
 
   constructor(canvas: React.MutableRefObject<fabric.Canvas | undefined>) {
-    this.canvas = canvas;
+    this.canvas = canvas as React.MutableRefObject<fabric.Canvas>;
+  }
+
+  setupCanvas() {
+    this.canvas.current.freeDrawingBrush.color = '#fff';
+    this.canvas.current.freeDrawingBrush.width = 5;
+    document.addEventListener('keyup', (e) => this.documentOnKeyUp(e));
+  }
+
+  documentOnKeyUp(e: KeyboardEvent) {
+    if (e.key === 'Delete') {
+      const objects = this.canvas.current?.getActiveObjects();
+
+      objects?.forEach((object) => {
+        this.canvas.current?.remove(object);
+      });
+
+      if (objects?.length) {
+        this.canvas.current?.discardActiveObject().renderAll();
+      }
+    }
   }
 
   setPointer() {

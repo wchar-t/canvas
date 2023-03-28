@@ -1,5 +1,6 @@
 import { Session } from '../interfaces/shared/session';
 import LoginSuccess from '../interfaces/client/LoginSuccess';
+import RegisterSuccess from '../interfaces/client/RegisterSuccess';
 import Board from '../interfaces/shared/board';
 
 /* eslint-disable no-undef */
@@ -43,6 +44,10 @@ export const request = async <Data extends Record<string, any>>(
 export default class Api {
   static async login(username: string, password: string): Promise<RequestResponse<LoginSuccess>> {
     return request<LoginSuccess>('/api/login', { username, password });
+  }
+
+  static async register(name: string, username: string, email: string, password: string): Promise<RequestResponse<RegisterSuccess>> {
+    return request<RegisterSuccess>('/api/register', { name, username, email, password });
   }
 
   static async logout() {

@@ -2,7 +2,7 @@ import { LegacyRef } from 'react';
 import styles from '../../styles/components/TextInput.module.css';
 
 interface TextInputOptions {
-    label: string,
+    label?: string,
     placeholder?: string,
     name: string,
     isPassword?: boolean,
@@ -12,7 +12,7 @@ interface TextInputOptions {
 }
 
 export default function TextInput({
-  label, placeholder, name, isPassword = false, isMultiline = false, inputRef, defaultValue,
+  label = '', placeholder, name, isPassword = false, isMultiline = false, inputRef, defaultValue,
 }: TextInputOptions) {
   return (
     <div>

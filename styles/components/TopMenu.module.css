@@ -55,6 +55,7 @@
 }
 
 .profile .info .name {
+  text-transform: capitalize;
 }
 
 .profile ul {

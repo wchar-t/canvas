@@ -81,7 +81,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .content .settings > div {
@@ -99,7 +99,7 @@
 .row > .settings {
   display: flex;
   flex-direction: row !important;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .row > .settings > div {

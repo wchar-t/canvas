@@ -7,13 +7,13 @@ export default function withMethod(
 ) {
   return (req: CanvasApiRequest, res: CanvasApiResponse) => {
     if (!methods.includes(req.method ?? '')) {
-      return res.status(405).json({ error: true, result: 'Método não permitido.' });
+      return res.status(405).json({ error: true, result: 'Método não permitido' });
     }
 
     if (req.method === 'POST') {
       const contentType = (req.headers?.['content-type'] || '').toLowerCase();
       if (contentType !== 'application/json') {
-        return res.status(400).json({ error: true, result: 'Content-Type inválido.' });
+        return res.status(400).json({ error: true, result: 'Content-Type inválido' });
       }
     }
 

@@ -2,6 +2,7 @@ import { Session } from '../interfaces/shared/session';
 import LoginSuccess from '../interfaces/client/LoginSuccess';
 import RegisterSuccess from '../interfaces/client/RegisterSuccess';
 import Board from '../interfaces/shared/board';
+import Me from '../interfaces/shared/me';
 
 /* eslint-disable no-undef */
 export interface SuccessfulResponse<Data extends Record<string, any>> {
@@ -15,6 +16,11 @@ export interface ErrorResponse {
     message: string,
   },
   result: null,
+}
+
+// generic response. used for routes that don't return anything
+interface Ok {
+  [key: string]: unknown
 }
 
 type RequestResponse<Data extends Record<string, any>> = | SuccessfulResponse<Data> | ErrorResponse;
@@ -46,8 +52,15 @@ export default class Api {
     return request<LoginSuccess>('/api/login', { username, password });
   }
 
-  static async register(name: string, username: string, email: string, password: string): Promise<RequestResponse<RegisterSuccess>> {
-    return request<RegisterSuccess>('/api/register', { name, username, email, password });
+  static async register(
+    name: string,
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<RequestResponse<RegisterSuccess>> {
+    return request<RegisterSuccess>('/api/register', {
+      name, username, email, password,
+    });
   }
 
   static async logout() {
@@ -56,7 +69,7 @@ export default class Api {
 
   // Rotas privadas
 
-  static async me(): Promise<RequestResponse<Session>> {
+  static async me(): Promise<RequestResponse<Me>> {
     return request('/api/me');
   }
 
@@ -70,6 +83,18 @@ export default class Api {
 
   static async saveBoard(id: string, data?: any): Promise<RequestResponse<Board>> {
     return request(`/api/board/${id}`, { data });
+  }
+
+  static async updateProfile(name: string, bio: string): Promise<RequestResponse<Ok>> {
+    return request('/api/update/profile', { name, bio });
+  }
+
+  static async updateEmail(email: string) {
+    return request('/api/update/email', { email });
+  }
+
+  static async updatePassword(password: string, newPassword: string) {
+    return request('/api/update/password', { password, new: newPassword });
   }
 
   // Local

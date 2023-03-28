@@ -8,7 +8,7 @@ interface TextInputOptions {
     isPassword?: boolean,
     isMultiline?: boolean,
     defaultValue?: string,
-    inputRef?: LegacyRef<HTMLInputElement>,
+    inputRef?: LegacyRef<HTMLInputElement | HTMLTextAreaElement>,
 }
 
 export default function TextInput({
@@ -26,6 +26,7 @@ export default function TextInput({
               name={name}
               className={styles.input}
               style={{ height: '130px' }}
+              ref={inputRef as LegacyRef<HTMLTextAreaElement>}
             />
           )
           : (
@@ -36,7 +37,7 @@ export default function TextInput({
               name={name}
               className={styles.input}
               autoComplete="off"
-              ref={inputRef}
+              ref={inputRef as LegacyRef<HTMLInputElement>}
             />
           )
       }

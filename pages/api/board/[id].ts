@@ -17,7 +17,7 @@ async function get(req: CanvasApiRequest, res: CanvasApiResponse) {
     return res.status(404).json({
       error: {
         code: 'board_not_found',
-        message: 'Quadro não encontrado ou você não tem acesso.',
+        message: 'Quadro não encontrado ou você não tem acesso',
       },
     });
   }
@@ -43,7 +43,7 @@ async function post(req: CanvasApiRequest, res: CanvasApiResponse) {
     return res.status(404).json({
       error: {
         code: 'board_not_found',
-        message: 'Quadro não encontrado ou você não tem acesso.',
+        message: 'Quadro não encontrado ou você não tem acesso',
       },
     });
   }
@@ -51,7 +51,7 @@ async function post(req: CanvasApiRequest, res: CanvasApiResponse) {
   const dir = path.join(__dirname, '../../../../../boards', `${board.id}.json`);
   await fsPromises.writeFile(dir, JSON.stringify(req.body.data));
 
-  return res.status(200).json({ error: false, result: 'Salvo com sucesso.' });
+  return res.status(200).json({ error: false, result: 'Salvo com sucesso' });
 }
 
 async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
@@ -63,7 +63,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     return post(req, res);
   }
 
-  return res.status(405).json({ error: true, result: 'Método não permitido.' });
+  return res.status(405).json({ error: true, result: 'Método não permitido' });
 }
 
 export default withSession(withMethod(handler, ['GET', 'POST']));

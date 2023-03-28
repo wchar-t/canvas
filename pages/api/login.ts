@@ -16,7 +16,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
   const { username, password }: params = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: true, result: 'Dados inválidos.' });
+    return res.status(400).json({ error: true, result: 'Dados inválidos' });
   }
 
   const doc = await prisma.user.findUnique({
@@ -32,7 +32,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     return res.status(400).json({
       error: {
         code: 'invalid_credentials',
-        message: 'E-mail inválido ou senha incorreta.',
+        message: 'E-mail inválido ou senha incorreta',
       },
     });
   }
@@ -41,7 +41,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     return res.status(400).json({
       error: {
         code: 'invalid_password',
-        message: 'Senha inválida.',
+        message: 'Senha inválida',
       },
     });
   }

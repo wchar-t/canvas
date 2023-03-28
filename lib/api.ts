@@ -101,6 +101,7 @@ export default class Api {
 
   static getLocalSession(): Session | null {
     if (typeof localStorage === 'undefined') return null;
+    if (!localStorage.getItem('token')) return null;
     return JSON.parse(Buffer.from(localStorage.getItem('token')?.split('.')[1] || 'e30=', 'base64').toString());
   }
 }

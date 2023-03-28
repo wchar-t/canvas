@@ -9,18 +9,21 @@ export default function Login() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const usernameRRef = useRef<HTMLInputElement>(null);
+  const passwordRRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const { push } = useRouter();
 
   async function login() {
+    console.log(usernameRef.current);
     if ((await controller.login(usernameRef, passwordRef))) {
       push('/board/new');
     }
   }
 
   async function register() {
-    if ((await controller.register(nameRef, usernameRef, emailRef, passwordRef))) {
+    if ((await controller.register(nameRef, usernameRRef, emailRef, passwordRRef))) {
       push('/settings');
     }
   }
@@ -39,9 +42,9 @@ export default function Login() {
       <div className={styles.form} style={{ display: isLogin ? 'none' : 'flex' }}>
         <h2>Cadastrar</h2>
         <div style={{ display: 'none' }}><TextInput label="Nome" name="name" placeholder="Digite seu nome" inputRef={nameRef} /></div>
-        <TextInput label="Usuário" name="username" placeholder="meuNick" inputRef={usernameRef} />
+        <TextInput label="Usuário" name="username" placeholder="meuNick" inputRef={usernameRRef} />
         <div style={{ display: 'none' }}><TextInput label="Email" name="email" placeholder="pessoa@dominio.com" inputRef={emailRef} /></div>
-        <TextInput label="Senha" name="password" placeholder="Digite sua senha" inputRef={passwordRef} isPassword />
+        <TextInput label="Senha" name="password" placeholder="Digite sua senha" inputRef={passwordRRef} isPassword />
         <FormButton label="Cadastrar" onClick={() => register()} />
         <div onClick={() => setIsLogin(true)} role="none" style={{ marginTop: 30, color: '#22232882' }}>Tem uma conta? Faça login aqui</div>
         { /* todo: social media */ }

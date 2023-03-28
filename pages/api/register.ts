@@ -17,7 +17,7 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
     name, username, email, password,
   }: params = req.body;
 
-  if (!username || !password || !name || !email) {
+  if (!username || !password) {
     return res.status(400).json({ error: true, result: 'Campos não preenchidos' });
   }
 
@@ -38,12 +38,12 @@ async function handler(req: CanvasApiRequest, res: CanvasApiResponse) {
 
   await prisma.user.create({
     data: {
-      email,
+      email: email || 'email@exemplo.com',
       password,
       username,
       profile: {
         create: {
-          name,
+          name: name || 'nissan skyline',
           bio: '',
           image: 'https://i.pinimg.com/736x/c7/c3/90/c7c3904ed2164988cf011e2abb9bd793.jpg',
         },

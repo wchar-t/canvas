@@ -25,6 +25,12 @@ export default class BoardController {
         this.canvas.current?.discardActiveObject().renderAll();
       }
     }
+    else if (e.key === '+') {
+      this.canvas.current.freeDrawingBrush.width += 5;
+    }
+    else if (e.key === '-') {
+      this.canvas.current.freeDrawingBrush.width -= 5;
+    }
   }
 
   setPointer() {

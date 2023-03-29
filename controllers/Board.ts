@@ -1,3 +1,4 @@
+import { fabric } from 'fabric';
 import Api from '../lib/api';
 
 export default class BoardController {
@@ -62,6 +63,39 @@ export default class BoardController {
 
     this.canvas.current?.loadFromJSON(result, () => {
       this.canvas.current?.renderAll();
+    });
+  }
+
+  async getCanvasSuggestion() {
+    if (!this.canvas.current) return;
+    // todo: multiple objects and spacing
+    const objects = this.canvas.current.getActiveObjects();
+
+    if (!objects.length) return;
+
+    const data = this.canvas.current.toDataURL({
+      format: 'png',
+      quality: 1,
+      multiplier: 2,
+      left: objects[0].left,
+      top: objects[0].top,
+      width: objects[0].width,
+      height: objects[0].height,
+    });
+
+    const { result: suggestion } = await Api.getCanvasSuggestion(data); // svg string
+
+    // placing the svg
+    fabric.loadSVGFromString(suggestion, (objs, options) => {
+      const svg = fabric.util.groupSVGElements(objs, options);
+      svg.set({
+        left: objects[0].left,
+        top: objects[0].top,
+      });
+      svg.scaleToWidth(objects[0].width || 0);
+      svg.scaleToHeight(objects[0].height || 0);
+      this.canvas.current?.add(svg);
+      this.canvas.current?.remove(objects[0]);
     });
   }
 

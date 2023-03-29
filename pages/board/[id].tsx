@@ -51,6 +51,7 @@ export default function Board() {
       <div className={styles['drawing-menu']}>
         <div style={{ marginLeft: 15 }}> </div>
         <BoardButton label={<Icon name="floppy-disk" type="solid" />} onClick={() => controller.saveCanvas(id as string)} />
+        <BoardButton label={<Icon name="microchip-ai" type="solid" />} onClick={() => controller.getCanvasSuggestion()} />
         <div className={styles.controls} ref={controlsEl}>
           <BoardButton label={<Icon name="arrow-pointer" />} onClick={() => controller.setPointer()} isActive />
           <div className={styles['drawing-menu-separator']}> </div>

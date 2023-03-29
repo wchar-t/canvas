@@ -73,6 +73,10 @@ export default class Api {
     return request('/api/me');
   }
 
+  static async getCanvasSuggestion(data: any): Promise<any> {
+    return request('/api/canvas/suggestion', { data });
+  }
+
   static async createBoard(): Promise<RequestResponse<Board>> {
     return request('/api/board/create');
   }

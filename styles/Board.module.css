@@ -1,0 +1,49 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+.drawing-menu, .menu {
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  background-color: #151619;
+}
+
+.drawing-menu, .menu, .controls {
+  gap: 2px;
+}
+
+.menu {
+  background-color: var(--bg-color-secondary);
+}
+
+.controls {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.drawing-menu-separator {
+  display: inline-flex;
+  width: 1px;
+  min-height: 19px;
+  border-left: 1px solid #464646;
+  margin: 0 10px;
+}
+
+.drawing-menu {
+  box-shadow: 0 3px 10px 1px #1010109e;
+}
